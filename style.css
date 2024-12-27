@@ -1,0 +1,149 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --borderRadius: 5px;
+  --inputTextBorder: solid grey 1px;
+  --inputTextFocusOutline: solid black 1.2px;
+}
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+form {
+  width: 350px;
+  height: 400px;
+
+  padding: 15px 8px 8px 10px;
+
+  border: 1.5px solid whitesmoke;
+  border-radius: var(--borderRadius);
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-line {
+  display: flex;
+  gap: 8px;
+}
+.flex-col-label {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+}
+.label-desc {
+  font-size: 14px;
+}
+.required {
+  font-size: 14px;
+  color: red;
+}
+.password-req-text {
+  margin-top: 5px;
+  font-size: 10px;
+  line-height: 1.2;
+}
+
+input {
+  all: unset;
+  width: 75%;
+  height: 18px;
+
+  border: var(--inputTextBorder);
+  border-radius: var(--borderRadius);
+  cursor: text;
+  padding: 3px 5px 3px 5px;
+
+  font-size: 15px;
+}
+input:focus {
+  outline: var(--inputTextFocusOutline);
+}
+
+/* individual input stylings */
+.input-name {
+  width: 120px;
+}
+.input-email {
+  width: 200px;
+}
+.input-country {
+  width: 150px;
+  padding: 2px 5px 2px 5px;
+
+  font-size: 14px;
+  border-radius: var(--borderRadius);
+  background-color: white;
+}
+.input-zip-code {
+  width: 50px;
+}
+.input-password {
+  width: 195px;
+  font-size: 12px;
+  padding-right: 1rem;
+}
+
+/* passwords */
+
+.wrapper {
+  position: relative;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.toggle-visible-button {
+  font-size: 13px;
+
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 5px;
+
+  cursor: pointer;
+
+  padding: 0 3px 0 3px;
+}
+
+/* requirement section */
+.length,
+.upper,
+.lower,
+.number,
+.special {
+  /* we can change this with Javascript setProperty */
+  --beforeColor: rgb(203, 0, 0);
+  --beforeContent: "✘";
+}
+
+.length::before,
+.upper::before,
+.lower::before,
+.number::before,
+.special::before {
+  color: var(--beforeColor);
+  content: var(--beforeContent);
+  margin-right: 4px;
+  font-weight: bold;
+}
+
+
+.submit-button {
+  margin-left: auto;
+  padding: 1px 5px 1px 5px;
+}
