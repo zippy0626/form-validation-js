@@ -1,5 +1,4 @@
-import FormChecker from "./formChecker.js";
-import { passwordValidator } from "./passwordValidator.js";
+import FormChecker from "./FormChecker.js";
 
 const Controller = {
   initialize() {
@@ -8,22 +7,18 @@ const Controller = {
     this.handleFormSubmitButton();
   },
 
-  getDocumentCurrentFocus() {
-    return document.activeElement;
-  },
-
   handlePasswordFieldsReqs() {
     const passwordInput = document.querySelector("#password");
 
     passwordInput.addEventListener("input", () => {
-      passwordValidator.checkAll();
+
     });
   },
 
   handleFormSubmitButton() {
-    const submitBtn = document.querySelector('.submit-button');
-    submitBtn.addEventListener('click', ()=>{
-      
+    const submitBtn = document.querySelector(".submit-button");
+    submitBtn.addEventListener("click", () => {
+
     });
   },
 
@@ -45,6 +40,7 @@ const Controller = {
       }
     });
   },
+  
 };
 
 export default Controller;
