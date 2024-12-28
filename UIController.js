@@ -1,13 +1,13 @@
-import FormChecker from "./FormChecker.js";
+import { FormChecker } from "./FormChecker.js";
 
 const Controller = {
   initialize() {
-    this.handlePasswordFieldsReqs();
+    this.handlePasswordFields();
     this.handlePasswordToggle();
-    this.handleFormSubmitButton();
+    this.handleSubmitButton();
   },
 
-  handlePasswordFieldsReqs() {
+  handlePasswordFields() {
     const passwordInput = document.querySelector("#password");
 
     passwordInput.addEventListener("input", () => {
@@ -15,7 +15,7 @@ const Controller = {
     });
   },
 
-  handleFormSubmitButton() {
+  handleSubmitButton() {
     const submitBtn = document.querySelector(".submit-button");
     submitBtn.addEventListener("click", () => {
 
@@ -40,7 +40,7 @@ const Controller = {
       }
     });
   },
-  
+
 };
 
 export default Controller;
