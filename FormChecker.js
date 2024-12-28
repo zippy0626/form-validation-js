@@ -1,17 +1,35 @@
 const FormChecker = {
+  setValidationMsg(selector, message) {
+    const input = document.querySelector(selector);
+    input.setCustomValidity(message);
+  },
+
+  showValidationMsg(selector) {
+    const input = document.querySelector(selector);
+    input.reportValidity();
+  },
+
+  resetAndHideValidationMsg(selector) {
+    const input = document.querySelector(selector);
+    setTimeout(() => {
+      input.blur(); //this needs to be first
+      input.setCustomValidity("");
+      input.focus();
+    }, 3000);
+  },
 
 };
 
 function changeRequirementStatus(selector, isDone) {
-  const criteria = document.querySelector(selector);
+  const requirement = document.querySelector(selector);
 
   if (isDone) {
-    criteria.style.setProperty("--beforeColor", "rgb(0, 177, 0)");
-    criteria.style.setProperty("--beforeContent", '"✔"'); //need double quotes for content
+    requirement.style.setProperty("--beforeColor", "rgb(0, 177, 0)");
+    requirement.style.setProperty("--beforeContent", '"✔"'); //need double quotes for content
   } else {
-    criteria.style.setProperty("--beforeColor", "rgb(203, 0, 0)");
-    criteria.style.setProperty("--beforeContent", '"✘"');
+    requirement.style.setProperty("--beforeColor", "rgb(203, 0, 0)");
+    requirement.style.setProperty("--beforeContent", '"✘"');
   }
 }
 
-export default FormChecker;
+export { FormChecker, changeRequirementStatus };
