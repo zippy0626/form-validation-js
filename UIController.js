@@ -44,7 +44,7 @@ const Controller = {
     const styleForm = () => {
       //Don't want to show error for non filled inputs
       const filledInputs = Array.from(
-        document.querySelectorAll("input, select, ")
+        document.querySelectorAll("input, select")
       ).filter((input) => input.value);
 
       for (const input of filledInputs) {
