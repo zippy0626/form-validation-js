@@ -6,18 +6,207 @@ const FormChecker = {
 
   showValidationMsg(selector) {
     const input = document.querySelector(selector);
+    input.classList.add("error");
     input.reportValidity();
   },
 
-  resetAndHideValidationMsg(selector) {
+  resetAndHideValidationMsg(selector, MILLISECONDS) {
     const input = document.querySelector(selector);
+
+    let userInteracted = false;
+
+    //Tell if user focuses(tab) somewhere else
+    const handleFocusOut = () => {
+      userInteracted = true;
+      document.removeEventListener("focusin", handleFocusOut);
+    };
+
+    document.addEventListener("focusin", handleFocusOut);
+
     setTimeout(() => {
-      input.blur(); //this needs to be first
-      input.setCustomValidity("");
-      input.focus();
-    }, 3000);
+      if (!userInteracted) {
+        input.blur(); //this needs to be first
+        input.setCustomValidity("");
+        input.focus();
+      }
+    }, MILLISECONDS);
   },
 
+  setShowResetHideValidMsg(selector, message, MILLISECONDS) {
+    this.setValidationMsg(selector, message);
+    this.showValidationMsg(selector);
+    this.resetAndHideValidationMsg(selector, MILLISECONDS);
+  },
+
+  setStatusValidOutline(bool, input) {
+    if (!bool) {
+      input.classList.add("error");
+      input.classList.remove("good");
+    } else {
+      input.classList.add("good");
+      input.classList.remove("error");
+    }
+  },
+
+  checkFirstName() {
+    const input = document.querySelector("#first-name");
+    const validStatus = input.validity;
+
+    if (validStatus.valueMissing) {
+      this.setShowResetHideValidMsg(
+        "#first-name",
+        "First name is missing!",
+        4000
+      );
+      this.setStatusValidOutline(false, input);
+      return false;
+    } else if (validStatus.tooShort) {
+      this.setShowResetHideValidMsg(
+        "#first-name",
+        "First name is too short!",
+        4000
+      );
+      this.setStatusValidOutline(false, input);
+      return false;
+    } else if (validStatus.tooLong) {
+      this.setShowResetHideValidMsg(
+        "#first-name",
+        "First name is too long!",
+        4000
+      );
+      this.setStatusValidOutline(false, input);
+      return false;
+    } else if (validStatus.patternMismatch) {
+      this.setShowResetHideValidMsg(
+        "#first-name",
+        "First name should only have letters!",
+        4000
+      );
+      this.setStatusValidOutline(false, input);
+      return false;
+    } else {
+      this.setStatusValidOutline(true, input);
+      return true;
+    }
+  },
+
+  checkLastName() {
+    const input = document.querySelector("#last-name");
+    const validStatus = input.validity;
+
+    if (validStatus.valueMissing) {
+      this.setShowResetHideValidMsg(
+        "#last-name",
+        "Last name is missing!",
+        4000
+      );
+      this.setStatusValidOutline(false, input);
+      return false;
+    } else if (validStatus.tooShort) {
+      this.setShowResetHideValidMsg(
+        "#last-name",
+        "Last name is too short!",
+        4000
+      );
+      this.setStatusValidOutline(false, input);
+      return false;
+    } else if (validStatus.tooLong) {
+      this.setShowResetHideValidMsg(
+        "#last-name",
+        "Last name is too long!",
+        4000
+      );
+      this.setStatusValidOutline(false, input);
+      return false;
+    } else if (validStatus.patternMismatch) {
+      this.setShowResetHideValidMsg(
+        "#last-name",
+        "Last name should only have letters!",
+        4000
+      );
+      this.setStatusValidOutline(false, input);
+      return false;
+    } else {
+      this.setStatusValidOutline(true, input);
+      return true;
+    }
+  },
+
+  checkEmail() {
+    const input = document.querySelector("#email");
+    const validStatus = input.validity;
+
+    if (validStatus.valueMissing) {
+      this.setShowResetHideValidMsg("#email", "Email is Missing!", 4000);
+      this.setStatusValidOutline(false, input);
+      return false;
+    } else if (validStatus.typeMismatch) {
+      this.setShowResetHideValidMsg(
+        "#email",
+        "Email is not a valid format!",
+        4000
+      );
+      this.setStatusValidOutline(false, input);
+      return false;
+    } else {
+      this.setStatusValidOutline(true, input);
+      return true;
+    }
+  },
+
+  checkCountry() {
+    const input = document.querySelector("#country");
+    const value = input.value;
+
+    if (!value) {
+      this.setShowResetHideValidMsg(
+        "#country",
+        "Please provide a country of residence!",
+        4000
+      );
+      this.setStatusValidOutline(false, input);
+      return false;
+    } else {
+      this.setStatusValidOutline(true, input);
+      return true;
+    }
+  },
+
+  checkZipCode() {
+    const input = document.querySelector("#zip-code");
+    const value = input.value;
+
+    if (!/^[0-9]{5}$/gm.test(value)) {
+      this.setShowResetHideValidMsg(
+        "#zip-code",
+        "Zip code is not a valid format!"
+      );
+      this.setStatusValidOutline(false, input);
+    } else {
+      this.setStatusValidOutline(true, input);
+      return true;
+    }
+  },
+
+  checkPassword() {
+    const input = document.querySelector("#password");
+  },
+
+  checkAll() {
+    const thingsToCheck = [
+      "checkFirstName",
+      "checkLastName",
+      "checkEmail",
+      "checkCountry",
+      "checkZipCode",
+    ];
+
+    for (const method of thingsToCheck) {
+      if (typeof FormChecker[method] === "function") {
+        if (FormChecker[method]() === false) return;
+      }
+    }
+  },
 };
 
 function changeRequirementStatus(selector, isDone) {
