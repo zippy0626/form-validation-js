@@ -2,23 +2,24 @@ import { FormChecker } from "./FormChecker.js";
 
 const Controller = {
   initialize() {
-    this.handlePasswordFields();
+    this.handlePasswordReqsUpdating();
     this.handlePasswordToggle();
     this.handleSubmitButton();
-    this.handleUpdateInputStyling();
+    this.updateInputStyling();
   },
 
   handleSubmitButton() {
     const submitBtn = document.querySelector(".submit-button");
-    //Check on submit
     submitBtn.addEventListener("click", () => {
-      FormChecker.checkAll();
+      FormChecker.checkOtherFormFields();
     });
   },
 
-  handlePasswordFields() {
+  handlePasswordReqsUpdating() {
     const passwordInput = document.querySelector("#password");
-    passwordInput.addEventListener("input", () => {});
+    passwordInput.addEventListener("input", () => {
+      FormChecker.updatePasswordVisualReqs();
+    });
   },
 
   handlePasswordToggle() {
@@ -40,8 +41,16 @@ const Controller = {
     });
   },
 
-  handleUpdateInputStyling() {
+  updateInputStyling() {
     const styleForm = () => {
+      const inputs = document.querySelectorAll("input, select");
+      for (const input of inputs) {
+        if (!input.value) {
+          input.classList.remove("good");
+          input.classList.remove("bad");
+        }
+      }
+
       //Don't want to show error for non filled inputs
       const filledInputs = Array.from(
         document.querySelectorAll("input, select")
@@ -49,15 +58,15 @@ const Controller = {
 
       for (const input of filledInputs) {
         if (input.validity.valid) {
-          FormChecker.setStatusValidOutline(true, input);
+          FormChecker.changeInputOutline(true, input);
         } else {
-          FormChecker.setStatusValidOutline(false, input);
+          FormChecker.changeInputOutline(false, input);
         }
       }
     };
 
     document.addEventListener("focusin", styleForm);
-    document.addEventListener('click', styleForm);
+    document.addEventListener("click", styleForm);
   },
 };
 

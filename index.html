@@ -22,9 +22,11 @@
             name="firstName"
             autocomplete="given-name"
             maxlength="20"
-            minlength="1"
+            minlength="2"
+            pattern="^[a-zA-Z]+$"
             required
             aria-required="true"
+            autofocus
           />
         </label>
 
@@ -41,6 +43,7 @@
             autocomplete="family-name"
             maxlength="20"
             minlength="1"
+            pattern="^[a-zA-Z]+$"
             required
             aria-required="true"
           />
@@ -408,6 +411,7 @@
           </span>
 
           <div class="wrapper">
+            <!-- pattern = "^(?=.{1,}[A-Z])(?=.{1,}[a-z])(?=.{1,}\d)$" -->
             <input
               type="password"
               id="password"
@@ -418,7 +422,7 @@
               required
               aria-required="true"
             />
-            <button type="button" class="toggle-visible-button">Show</span>
+            <button type="button" class="toggle-visible-button">Show</button>
           </div>
         </label>
       </div>
@@ -445,11 +449,19 @@
 
       <div class="form-line">
         <p class="password-req-text">
-          <span class="req-item length">Must have 12 to 24 characters</span><br>
-          <span class="req-item upper">Must have at least one Uppercase Letter</span><br>
-          <span class="req-item lower">Must have at least one Lowercase Letter</span><br>
-          <span class="req-item number">Must have at least one Number</span><br>
-          <span class="req-item special">Must have at least three distinct Special Characters ~`!@#$%^&*() </span>
+          <span class="req-item length">Must have 12 to 24 characters</span
+          ><br />
+          <span class="req-item upper"
+            >Must have at least one Uppercase Letter</span
+          ><br />
+          <span class="req-item lower"
+            >Must have at least one Lowercase Letter</span
+          ><br />
+          <span class="req-item number">Must have at least one Number</span
+          ><br />
+          <span class="req-item special"
+            >Must have at least three distinct Special Characters ~`!@#$%^&*()
+          </span>
         </p>
       </div>
 
