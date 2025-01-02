@@ -42,6 +42,11 @@ const FormChecker = {
     this.setShowResetHideValidMsg(selector, message, MILLISECONDS);
     this.changeInputOutline(false, input);
   },
+
+  updateTrueInput(inputElement) {
+    inputElement.setCustomValidity("");
+    this.changeInputOutline(true, inputElement);
+  },
   //
 
   checkFirstName() {
@@ -65,8 +70,7 @@ const FormChecker = {
       );
       return false;
     } else {
-      input.setCustomValidity("");
-      this.changeInputOutline(true, input);
+      this.updateTrueInput(input);
       return true;
     }
   },
@@ -92,8 +96,7 @@ const FormChecker = {
       );
       return false;
     } else {
-      input.setCustomValidity("");
-      this.changeInputOutline(true, input);
+      this.updateTrueInput(input);
       return true;
     }
   },
@@ -113,8 +116,7 @@ const FormChecker = {
       );
       return false;
     } else {
-      input.setCustomValidity("");
-      this.changeInputOutline(true, input);
+      this.updateTrueInput(input);
       return true;
     }
   },
@@ -131,8 +133,7 @@ const FormChecker = {
       );
       return false;
     } else {
-      input.setCustomValidity("");
-      this.changeInputOutline(true, input);
+      this.updateTrueInput(input);
       return true;
     }
   },
@@ -145,18 +146,16 @@ const FormChecker = {
       this.updateFalseInput(
         "#zip-code",
         "Zip code is not a valid format! (eg. 12345)",
-        3000
+        4000
       );
-      this.changeInputOutline(false, input);
       return false;
     } else {
-      input.setCustomValidity("");
-      this.changeInputOutline(true, input);
+      this.updateTrueInput(input);
       return true;
     }
   },
 
-  checkPassword() {
+  checkPasswordFields() {
     //helper fn
     function checkPattern(regex, selector, validationMsg) {
       const input = document.querySelector(selector);
@@ -164,12 +163,10 @@ const FormChecker = {
       const isValid = regex.test(value);
 
       if (!isValid) {
-        FormChecker.setShowResetHideValidMsg(selector, validationMsg, 4000);
-        FormChecker.changeInputOutline(false, input);
+        FormChecker.updateFalseInput(selector, validationMsg, 4000);
         return isValid;
       } else {
-        input.setCustomValidity("");
-        FormChecker.changeInputOutline(true, input);
+        FormChecker.updateTrueInput(input);
         return isValid;
       }
     }
@@ -207,18 +204,19 @@ const FormChecker = {
     }
 
     function checkSpecial() {
-      const element = document.querySelector("#password");
-      const value = element.value;
+      const input = document.querySelector("#password");
+      const value = input.value;
       const specialChars = [...new Set(value.match(/[~`!@#$%^&*()]/g))];
       if (specialChars.length < 3) {
-        element.setCustomValidity(
-          "Password does not have three distinct special characters!"
+        FormChecker.updateFalseInput(
+          "#password",
+          "Password does not have three distinct special characters!",
+          4000
         );
-        element.reportValidity();
-        FormChecker.changeInputOutline(false, element);
+        return false;
       } else {
-        element.setCustomValidity("");
-        FormChecker.changeInputOutline(true, element);
+        FormChecker.updateTrueInput(input);
+        return true;
       }
     }
 
@@ -234,10 +232,8 @@ const FormChecker = {
         );
         return false;
       } else {
-        password.setCustomValidity("");
-        confirmPassword.setCustomValidity("");
-        FormChecker.changeInputOutline(true, password);
-        FormChecker.changeInputOutline(true, confirmPassword);
+        FormChecker.updateTrueInput(password);
+        FormChecker.updateTrueInput(confirmPassword);
         return true;
       }
     }
@@ -299,14 +295,14 @@ const FormChecker = {
     checkSpecial();
   },
 
-  checkOtherFormFields() {
+  checkFormFields() {
     const methodsToCheck = [
       "checkFirstName",
       "checkLastName",
       "checkEmail",
       "checkCountry",
       "checkZipCode",
-      "checkPassword",
+      "checkPasswordFields",
     ];
 
     for (const method of methodsToCheck) {
