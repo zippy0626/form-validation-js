@@ -249,7 +249,7 @@ const FormChecker = {
 
     for (const fnName in functionMap) {
       const result = functionMap[fnName]();
-      if (!result) return;
+      if (!result) return result;
     }
   },
 

@@ -11,7 +11,7 @@ const Controller = {
   handleSubmitButton() {
     const submitBtn = document.querySelector(".submit-button");
     submitBtn.addEventListener("click", () => {
-      FormChecker.checkOtherFormFields();
+      FormChecker.checkFormFields();
     });
   },
 
@@ -57,7 +57,11 @@ const Controller = {
       ).filter((input) => input.value);
 
       for (const input of filledInputs) {
-        if (input.validity.valid) {
+        if (
+          input.validity.valid &&
+          input.id !== "password" &&
+          input.id !== "confirm-password"
+        ) {
           FormChecker.changeInputOutline(true, input);
         } else {
           FormChecker.changeInputOutline(false, input);
